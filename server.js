@@ -26,6 +26,11 @@ app.get('/login', (req, res) => {
   res.render("login.pug");
 })
 
+// --- NEW POST PAGE ---
+app.get('/post', (req, res) => {
+  res.render("postpage.pug");
+})
+
 app.use((req, res, next) => {
   res.status(404).render('404.pug');
 })

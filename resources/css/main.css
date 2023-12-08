@@ -12,6 +12,13 @@ nav {
   background-color: white;
   display: flex;
   width: 100%;
+  font-family: 'Rethink Sans', sans-serif;
+}
+
+nav > span {
+  padding: 1.2em;
+  color: #6A4F40;
+  font-weight: bold;
 }
 
 nav > ul {
@@ -27,11 +34,15 @@ nav > ul {
   width: 5em;
   text-align: center;
   padding: 1.2em;
-  font-family: 'Rethink Sans', sans-serif;
 }
 
 .navLink {
   text-decoration: none;
+  color: #6A4F40;
+}
+
+.navLink:hover {
+  color: #B1A196;
 }
 
 
