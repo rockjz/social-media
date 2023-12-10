@@ -1,4 +1,4 @@
-mixin navBar
+mixin navBar(loggedIn)
   nav
     span AmbyAnts
     ul
@@ -6,5 +6,9 @@ mixin navBar
         a(class="navLink" href='/') Home
       li(class="navItem")
         a(class="navLink" href='/post') Post
-      li(class="navItem")
-        a(class="navLink" href='/login') Login
+      if !loggedIn 
+        li(class="navItem")
+          a(class="navLink" href='/login') Login / Create Account
+      else 
+        li(class="navItem")
+          a(class="navLink" href='/login') Profile

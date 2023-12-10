@@ -1,4 +1,4 @@
-include navbar 
+include navbar
 
 doctype html 
 head
@@ -6,6 +6,19 @@ head
   title AmbyAnts
   link(rel='stylesheet' href='/resources/css/main.css')
 
-+navBar
++navBar(loggedIn)
 
-h1 SocialMediaTitle 
+h1 Home
+
+.allPostsContainer
+  //- .postContainer
+  each post in posts 
+    .postContainer
+      span.postUser= post.username 
+      span.postContent= post.content
+      .post-upvote-container
+        span Likes:&nbsp;
+        span= post.upvotes 
+      .post-downvote-container
+        span Dislikes:&nbsp;
+        span= post.downvotes

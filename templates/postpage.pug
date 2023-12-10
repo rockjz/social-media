@@ -1,4 +1,4 @@
-include navbar 
+include navbar
 
 doctype html 
 head
@@ -6,6 +6,15 @@ head
   title Post
   link(rel='stylesheet' href='/resources/css/main.css')
 
-+navBar
++navBar(loggedIn)
 
 h1 Make a Post!
+
+.entry-form 
+  form(action='/post' method='POST')
+    div(class="form-elements")
+      div 
+        label(for='content')
+        textarea#content(name='content' placeholder='Limit: 300 Characters' required)
+      div
+        input#submit(class="submit" type='submit' value='Post')

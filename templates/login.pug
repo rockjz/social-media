@@ -1,4 +1,4 @@
-include navbar 
+include navbar
 
 doctype html 
 head
@@ -6,6 +6,32 @@ head
   title Login
   link(rel='stylesheet' href='/resources/css/main.css')
 
-+navBar
++navBar(loggedIn)
+
+h1 Create Account
+
+.entry-form
+  form(action='/createaccount' method='POST')
+    div(class="form-elements")
+      div 
+        label(for='newUser')
+        input#newUser(name='newUser' placeholder='Enter Username' required)
+      div 
+        label(for='newPass')
+        input#newPass(type="password" name='newPass' placeholder='Enter Password' required)
+      div
+        input#submit(class="submit" type='submit' value='Create')
 
 h1 Login
+
+.entry-form 
+  form(action='/login' method='POST')
+    div(class="form-elements")
+      div 
+        label(for='loginUser')
+        input#loginUser(name='loginUser' placeholder='Enter Username' required)
+      div 
+        label(for='loginPass')
+        input#loginPass(type="password" name='loginPass' placeholder='Enter Password' required)
+      div
+        input#submit(class="submit" type='submit' value='Login')
