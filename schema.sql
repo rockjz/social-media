@@ -23,3 +23,5 @@ SELECT upvotes FROM posts WHERE post_id = 10;
 UPDATE posts SET upvotes=4 WHERE post_id = 10;
 
 UPDATE posts SET content="hi" WHERE post_id = 10;
+
+DELETE FROM posts WHERE post_id=31;

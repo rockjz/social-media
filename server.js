@@ -1,7 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser')
-const { createPost, getPosts, getUser, get_likes, increase_like, edit_post } = require('./data');
+const { createPost, getPosts, getUser, get_likes, increase_like, edit_post, delete_post } = require('./data');
 
 const app = express();
 const port = 1738;
@@ -126,6 +126,11 @@ app.post('/editPost', async (req, res) => {
   const post_id = parseInt(req.body.id);
   const newMessage = req.body.message;
   await edit_post(post_id, newMessage)
+})
+
+app.post('/deletePost', async (req, res) => {
+  const post_id = parseInt(req.body.id);
+  await delete_post(post_id)
 })
 
 app.use((req, res, next) => {

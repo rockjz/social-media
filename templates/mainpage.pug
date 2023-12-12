@@ -6,7 +6,7 @@ head
   title AmbyAnts
   link(rel='stylesheet' href='/resources/css/main.css')
   script(src='/resources/js/voting.js')
-  script(src='/resources/js/edit.js')
+  script(src='/resources/js/editdelete.js')
 
 +navBar(loggedIn)
 
@@ -19,7 +19,8 @@ h1 Home
       span.postUser= post.username 
       if username === post.username 
         div.editButtonDiv
-          button(id="editButton" onclick="editThePost(this, "+post.post_id+")") Edit Post
+          button(id="editButton" onclick="editThePost(this, "+post.post_id+")") Edit
+          button(id="deleteButton" onclick="deleteThePost(this, "+post.post_id+")") Delete
       span.postContent(id="post"+post.post_id)= post.content
       .post-upvote-container
         span(id="likeString"+post.post_id)= "Likes: "

@@ -54,4 +54,9 @@ async function edit_post(postid, newMessage) {
   return query;
 }
 
-module.exports = { createPost, getPosts, getUser, createPost, get_likes, increase_like, edit_post };
+async function delete_post(postid) {
+  const query = await connPool.awaitQuery(`delete from posts where post_id=\"${postid}\"`)
+  return query;
+}
+
+module.exports = { createPost, getPosts, getUser, createPost, get_likes, increase_like, edit_post, delete_post };

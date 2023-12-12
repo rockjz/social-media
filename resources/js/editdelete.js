@@ -8,7 +8,7 @@ function editThePost(node, postid) {
   post.toggleAttribute("contentEditable")
   if (button.innerHTML === "Save changes?") {
     newMessage = post.innerHTML;
-    button.innerHTML = "Edit Post"
+    button.innerHTML = "Edit"
   } else {
     button.innerHTML = "Save changes?"
   }
@@ -20,3 +20,16 @@ function editThePost(node, postid) {
     body: JSON.stringify({"id" : postid, "message" : newMessage})
   })
 }
+
+function deleteThePost(node, postid) {
+  const post = document.getElementById("post"+postid);
+  post.parentElement.remove();
+  fetch("http://127.0.0.1:1738/deletePost", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({"id" : postid })
+  })
+}
+

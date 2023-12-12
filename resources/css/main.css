@@ -122,6 +122,17 @@ h1 {
   color: #B1A196;
 }
 
+#deleteButton {
+  background: none;
+  border: none;
+  color: #6A4F40;
+  padding-left: 1.25em;
+}
+
+#deleteButton:hover {
+  color: #B1A196;
+}
+
 .postContent {
   background-color: #F8F4E0;
   overflow-wrap: break-word;
