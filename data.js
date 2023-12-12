@@ -19,8 +19,12 @@ async function createPost(data){
     return await connPool.awaitQuery("INSERT INTO posts (username, content) VALUES (?, ?)", [username, content]);
 }
 
-async function getPosts() {
-  const posts = await connPool.awaitQuery("SELECT * FROM posts ORDER BY post_id DESC");
+async function getPosts(sort) {
+  let query = "SELECT * FROM posts ORDER BY post_id DESC"
+  if (sort === "likes") {
+    query = "SELECT * FROM posts ORDER BY upvotes DESC"
+  }
+  const posts = await connPool.awaitQuery(query);
   return posts;
 }
 

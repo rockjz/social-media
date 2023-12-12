@@ -20,7 +20,13 @@ app.use('/resources', express.static("resources"));
 
 // --- MAIN PAGE ---
 app.get('/', (req, res) => {
-  getPosts().then(posts => {
+  if (req.session.sort === undefined && req.query.sort === undefined) {
+    req.session.sort = ""
+  }
+  else if (req.query.sort !== undefined) {
+    req.session.sort = req.query.sort
+  } 
+  getPosts(req.session.sort).then(posts => {
     const numPages = (posts.length / 5);
     let page = parseInt(req.query.page ?? 1)
     if (!page) {

@@ -12,6 +12,12 @@ head
 
 h1 Home
 
+form(action="/" method="GET")
+  select(name="sort")
+      option(value="recent") Recently Posted
+      option(value="likes") Most Liked
+      input(type="submit" value="Go!")
+
 .allPostsContainer
   //- .postContainer
   each post in posts 
