@@ -49,4 +49,9 @@ async function increase_like(postid, newUpvotes) {
   return query;
 }
 
-module.exports = { createPost, getPosts, getUser, createPost, get_likes, increase_like };
+async function edit_post(postid, newMessage) {
+  const query = await connPool.awaitQuery(`update posts set content=\"${newMessage}\" where post_id=\"${postid}\"`)
+  return query;
+}
+
+module.exports = { createPost, getPosts, getUser, createPost, get_likes, increase_like, edit_post };

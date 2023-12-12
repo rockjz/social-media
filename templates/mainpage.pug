@@ -6,6 +6,7 @@ head
   title AmbyAnts
   link(rel='stylesheet' href='/resources/css/main.css')
   script(src='/resources/js/voting.js')
+  script(src='/resources/js/edit.js')
 
 +navBar(loggedIn)
 
@@ -16,7 +17,10 @@ h1 Home
   each post in posts 
     .postContainer
       span.postUser= post.username 
-      span.postContent= post.content
+      //- if username === post.username 
+      div.editButtonDiv
+        button(id="editButton" onclick="editThePost(this, "+post.post_id+")") Edit Post
+      span.postContent(id="post"+post.post_id)= post.content
       .post-upvote-container
         span(id="likeString"+post.post_id)= "Likes: "
         span(id="likes")= post.upvotes

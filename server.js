@@ -1,7 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser')
-const { createPost, getPosts, getUser, get_likes, increase_like } = require('./data');
+const { createPost, getPosts, getUser, get_likes, increase_like, edit_post } = require('./data');
 
 const app = express();
 const port = 1738;
@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
     for (let i = 1; i < numPages + 1; i++) {
       pages.push(i);
     }
-    res.render("mainpage.pug", { posts, loggedIn: req.session.name ? true : false, pages });
+    res.render("mainpage.pug", { posts, loggedIn: req.session.name ? true : false, pages, username: req.session.name });
   })
 })
 
@@ -120,6 +120,12 @@ app.post('/removeUpvote', async (req, res) => {
     numLikes -= 1;
     increase_like(post_id, numLikes++);
   })
+})
+
+app.post('/editPost', async (req, res) => {
+  const post_id = parseInt(req.body.id);
+  const newMessage = req.body.message;
+  await edit_post(post_id, newMessage)
 })
 
 app.use((req, res, next) => {
