@@ -56,7 +56,6 @@ h1 {
   padding: 1em;
   display: flex;
   justify-content: center;
-  /* background-color: red; */
 }
 
 .entry-form {
@@ -90,7 +89,6 @@ h1 {
 }
 
 .allPostsContainer {
-  /* background-color: blue; */
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -119,6 +117,18 @@ h1 {
   border-radius: 1em;
 }
 
+input[type=checkbox] {
+  background-color: #F8F4E0;
+}
+
+
+.not-logged-in {
+  color: darkred;
+  padding: 0.5em;
+  display: flex;
+  justify-content: center;
+}
+
 
 .post-upvote-container {
   text-align: center;
@@ -128,4 +138,16 @@ h1 {
 .post-downvote-container {
   text-align: center;
   width: 50%;
+}
+
+.logout {
+  color: #6A4F40;
+  padding: 1em;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.logout:hover {
+  color: #B1A196;
 }

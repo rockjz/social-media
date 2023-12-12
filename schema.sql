@@ -17,3 +17,7 @@ create table posts (
 INSERT INTO users (username, password) VALUES ("testUser", "testPassword");
 
 INSERT INTO posts (username, content) VALUES ("testUser", "This is some content!", 0, 0);
+
+SELECT upvotes FROM posts WHERE post_id = 10;
+
+UPDATE posts SET upvotes=4 WHERE post_id = 10;

@@ -5,6 +5,7 @@ head
   meta(charset='UTF-8')
   title AmbyAnts
   link(rel='stylesheet' href='/resources/css/main.css')
+  script(src='/resources/js/voting.js')
 
 +navBar(loggedIn)
 
@@ -17,8 +18,15 @@ h1 Home
       span.postUser= post.username 
       span.postContent= post.content
       .post-upvote-container
-        span Likes:&nbsp;
-        span= post.upvotes 
+        span(id="likeString"+post.post_id)= "Likes: "
+        span(id="likes")= post.upvotes
+        input(class="likeButton" type="checkbox" class="voteButton" onclick="addLike(this, "+post.upvotes+", "+post.post_id+")")
       .post-downvote-container
         span Dislikes:&nbsp;
         span= post.downvotes
+
+form(action="/" method="GET")
+  select(name="page")
+    for thing in pages
+      option(value=thing)= thing
+    input(type="submit" value="Go!")

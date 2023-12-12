@@ -33,4 +33,20 @@ async function createPost(username, content) {
   return await connPool.awaitQuery("INSERT INTO posts (username, content) VALUES (?, ?)", [username, content]);
 }
 
-module.exports = { createPost, getPosts, getUser, createPost };
+// async function try_login(username, password) {
+//   const query = ("select id from user_data where username = ? and password = ?", [username, password])
+//   let result = await connPool.awaitQuery(query)
+//   return result.length>0;
+// }
+
+async function get_likes(postid) {
+  const query = await connPool.awaitQuery(`select upvotes from posts where post_id=\"${postid}\"`);
+  return query[0].upvotes;
+}
+
+async function increase_like(postid, newUpvotes) {
+  const query = await connPool.awaitQuery(`update posts set upvotes=\"${newUpvotes}\" where post_id=\"${postid}\"`)
+  return query;
+}
+
+module.exports = { createPost, getPosts, getUser, createPost, get_likes, increase_like };

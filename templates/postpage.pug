@@ -9,6 +9,8 @@ head
 +navBar(loggedIn)
 
 h1 Make a Post!
+if (!loggedIn)
+  span.not-logged-in You must be logged in to post!
 
 .entry-form 
   form(action='/post' method='POST')
