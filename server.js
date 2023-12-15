@@ -1,7 +1,8 @@
 const express = require('express');
 const session = require('express-session');
+const bcrypt = require('bcrypt')
 const bodyParser = require('body-parser')
-const { createPost, getPosts, getUser, get_likes, increase_like, edit_post, delete_post } = require('./data');
+const { createPost, getPosts, getUser, create_user, get_likes, increase_like, edit_post, delete_post } = require('./data');
 
 const app = express();
 const port = 1738;
@@ -20,12 +21,14 @@ app.use('/resources', express.static("resources"));
 
 // --- MAIN PAGE ---
 app.get('/', (req, res) => {
+  // Determine how the post order is displayed
   if (req.session.sort === undefined && req.query.sort === undefined) {
     req.session.sort = ""
   }
   else if (req.query.sort !== undefined) {
     req.session.sort = req.query.sort
   } 
+
   getPosts(req.session.sort).then(posts => {
     const numPages = (posts.length / 5);
     let page = parseInt(req.query.page ?? 1)
@@ -38,7 +41,7 @@ app.get('/', (req, res) => {
     for (let i = 1; i < numPages + 1; i++) {
       pages.push(i);
     }
-    res.render("mainpage.pug", { posts, loggedIn: req.session.name ? true : false, pages, username: req.session.name });
+    res.render("mainpage.pug", { posts, loggedIn: req.session.name ? true : false, pages, username: req.session.name, sort: req.session.sort, page });
   })
 })
 
@@ -61,7 +64,7 @@ app.post('/login', async (req, res) => {
       // No user exists
       if(user[0] === undefined) {
         console.log("No user exists")
-        res.render("loginerror.pug", { loggedIn })
+        res.render("alert.pug", { loggedIn, message: "No user exists" })
         return
       }
 
@@ -75,8 +78,29 @@ app.post('/login', async (req, res) => {
       // Incorrect password
       else {
         console.log("Wrong password")
-        res.render("loginerror.pug", { loggedIn });
+        res.render("alert.pug", { loggedIn, message: "Incorrect password" });
       }
+    })
+  } catch {
+    res.render("alert.pug", { loggedIn, message: "Error logging in" });
+  }
+})
+
+app.post('/createAccount', (req, res) => {
+  loggedIn = req.session.name ? true : false;
+  try {
+    create_user(req.body.newUser, req.body.newPass).then(user => {
+
+      // User already exists
+      if(!user) {
+        res.render("alert.pug", { loggedIn, message: "User already exists" })
+        return
+      }
+
+      // Successful creation
+      userName = req.body.newUser;
+      req.session.name = userName;
+      res.render("profile.pug", { name: userName, loggedIn: true });
     })
   } catch {
     res.render("loginerror.pug", { loggedIn });
@@ -85,9 +109,8 @@ app.post('/login', async (req, res) => {
 
 // --- LOGOUT ---
 app.get('/logout', async (req, res) => {
-  req.session.name = undefined;
-  loggedIn = req.session.name ? true : false;
-  res.render("loggedout.pug", { loggedIn })
+  req.session.destroy()
+  res.render("alert.pug", { loggedIn: false, message: "Successfully logged out" })
 })
 
 // --- NEW POST PAGE ---
@@ -100,19 +123,17 @@ app.post('/post', (req, res) => {
   loggedIn = req.session.name ? true : false;
   if (req.session.name) {
     createPost(userName, req.body.content).then(newPost => {
-      res.render("postsuccess.pug", { loggedIn })
+      res.render("alert.pug", { loggedIn, message: "Post created!" })
     })
   }
   else {
-    res.render("posterror.pug", { loggedIn });
+    res.render("alert.pug", { loggedIn, message: "Error creating post" });
   }
 })
 
 // --- LIKES AND DISLIKES ---
 app.post('/addUpvote', async (req, res) => {
-  console.log(req.body)
   const post_id = parseInt(req.body.id)
-  console.log("addvote postId: "+post_id)
   await get_likes(post_id).then(numLikes => {
     numLikes += 1;
     increase_like(post_id, numLikes++);
@@ -121,7 +142,6 @@ app.post('/addUpvote', async (req, res) => {
 
 app.post('/removeUpvote', async (req, res) => {
   const post_id = parseInt(req.body.id)
-  console.log(post_id)
   await get_likes(post_id).then(numLikes => {
     numLikes -= 1;
     increase_like(post_id, numLikes++);

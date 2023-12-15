@@ -12,11 +12,15 @@ head
 
 h1 Home
 
-form(action="/" method="GET")
-  select(name="sort")
-      option(value="recent") Recently Posted
-      option(value="likes") Most Liked
-      input(type="submit" value="Go!")
+.sortContainer
+  form(action="/" method="GET")
+    select(class="sortSelect" name="sort" default="Most Liked")
+        option(value="recent") Recently Posted
+        if sort === "likes"
+          option(value="likes" selected) Most Liked
+        else 
+          option(value="likes") Most Liked
+        input(class="goButton" type="submit" value="Go!")
 
 .allPostsContainer
   //- .postContainer
@@ -29,15 +33,15 @@ form(action="/" method="GET")
           button(id="deleteButton" onclick="deleteThePost(this, "+post.post_id+")") Delete
       span.postContent(id="post"+post.post_id)= post.content
       .post-upvote-container
-        span(id="likeString"+post.post_id)= "Likes: "
         span(id="likes")= post.upvotes
-        input(class="likeButton" type="checkbox" class="voteButton" onclick="addLike(this, "+post.upvotes+", "+post.post_id+")")
-      .post-downvote-container
-        span Dislikes:&nbsp;
-        span= post.downvotes
+        button(class="likeButton" onclick="addLike(this, "+post.upvotes+", "+post.post_id+")") &#129294
 
-form(action="/" method="GET")
-  select(name="page")
-    for thing in pages
-      option(value=thing)= thing
-    input(type="submit" value="Go!")
+.pageSelectContainer
+  form(action="/" method="GET")
+    select(class="pageSelect" name="page")
+      for thing in pages
+        if page === thing
+          option(value=thing selected)= thing
+        else 
+          option(value=thing)= thing
+      input(class="goButton" type="submit" value="Go!")

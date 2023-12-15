@@ -33,6 +33,24 @@ async function getUser(username) {
   return user;
 }
 
+async function create_user(username, password) {
+  userExists = false;
+  const user = await connPool.awaitQuery(`SELECT * FROM users WHERE username=\"${username}\"`);
+  console.log(user)
+
+  // User already exists
+  if (user[0]) {
+    userExists = true;
+  }
+
+  if (userExists) {
+    return false;
+  }
+
+  const newUser = await connPool.awaitQuery("INSERT INTO users (username, password) VALUES (?, ?)", [username, password]);
+  return newUser;
+}
+
 async function createPost(username, content) {
   return await connPool.awaitQuery("INSERT INTO posts (username, content) VALUES (?, ?)", [username, content]);
 }
@@ -63,4 +81,4 @@ async function delete_post(postid) {
   return query;
 }
 
-module.exports = { createPost, getPosts, getUser, createPost, get_likes, increase_like, edit_post, delete_post };
+module.exports = { createPost, getPosts, getUser, create_user, createPost, get_likes, increase_like, edit_post, delete_post };

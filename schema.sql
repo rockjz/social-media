@@ -14,6 +14,12 @@ create table posts (
   foreign key(username) references users(username)
 );
 
+-- create table post_likes (
+--   post_id int not null,
+--   username varchar(16) not null,
+--   foreign key(post_id) references posts(post_id)
+-- )
+
 INSERT INTO users (username, password) VALUES ("testUser", "testPassword");
 
 INSERT INTO posts (username, content) VALUES ("testUser", "This is some content!", 0, 0);

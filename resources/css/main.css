@@ -133,6 +133,74 @@ h1 {
   color: #B1A196;
 }
 
+.sortSelect {
+  background-color: #EBE7DA;
+  border: none;
+  border-radius: 0.5em;
+}
+
+.sortContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.sortContainer > form  > select {
+  color: #6A4F40;
+  padding: 0.5em;
+}
+
+.sortContainer > form  > select:hover {
+  background-color: white;
+}
+
+.pageSelect {
+  background-color: #EBE7DA;
+  border: none;
+  border-radius: 0.5em;
+}
+
+.pageSelectContainer {
+  display: flex;
+  justify-content: center;
+  padding-top: 1em;
+  padding-bottom: 3em;
+  border: none;
+}
+
+.pageSelectContainer > form > select {
+  color: #6A4F40;
+}
+
+.pageSelectContainer > form > select:hover {
+  background-color: white;
+}
+
+.goButton {
+  background: none;
+  border: none;
+  padding-left: 1em;
+  color: #6A4F40;
+}
+
+.goButton:hover {
+  color: #B1A196;
+}
+
+#likes {
+  color: #6A4F40;
+  padding-right: 0.5em;
+}
+
+.likeButton {
+  border: none;
+  border-radius: 0.5em;
+}
+
+.likeButton:hover {
+  color: #EBE7DA;
+}
+
+
 .postContent {
   background-color: #F8F4E0;
   overflow-wrap: break-word;
@@ -159,12 +227,7 @@ input[type=checkbox] {
 
 .post-upvote-container {
   text-align: center;
-  width: 50%;
-}
-
-.post-downvote-container {
-  text-align: center;
-  width: 50%;
+  width: 100%;
 }
 
 .logout {
