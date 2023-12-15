@@ -13,13 +13,11 @@ var connPool = mysql.createPool({
 
 // later you can use connPool.awaitQuery(query, data) -- it will return a promise for the query results.
 
-async function createPost(data){
-    const username = data.username;
-    const content = data.content;
-    return await connPool.awaitQuery("INSERT INTO posts (username, content) VALUES (?, ?)", [username, content]);
+async function create_post(username, content){
+  return await connPool.awaitQuery("INSERT INTO posts (username, content) VALUES (?, ?)", [username, content]);
 }
 
-async function getPosts(sort) {
+async function get_posts(sort) {
   let query = "SELECT * FROM posts ORDER BY post_id DESC"
   if (sort === "likes") {
     query = "SELECT * FROM posts ORDER BY upvotes DESC"
@@ -28,7 +26,7 @@ async function getPosts(sort) {
   return posts;
 }
 
-async function getUser(username) {
+async function get_user(username) {
   const user = await connPool.awaitQuery(`SELECT * FROM users WHERE username=\"${username}\"`);
   return user;
 }
@@ -55,12 +53,6 @@ async function createPost(username, content) {
   return await connPool.awaitQuery("INSERT INTO posts (username, content) VALUES (?, ?)", [username, content]);
 }
 
-// async function try_login(username, password) {
-//   const query = ("select id from user_data where username = ? and password = ?", [username, password])
-//   let result = await connPool.awaitQuery(query)
-//   return result.length>0;
-// }
-
 async function get_likes(postid) {
   const query = await connPool.awaitQuery(`select upvotes from posts where post_id=\"${postid}\"`);
   return query[0].upvotes;
@@ -81,4 +73,4 @@ async function delete_post(postid) {
   return query;
 }
 
-module.exports = { createPost, getPosts, getUser, create_user, createPost, get_likes, increase_like, edit_post, delete_post };
+module.exports = { create_post, get_posts, get_user, create_user, createPost, get_likes, increase_like, edit_post, delete_post };
