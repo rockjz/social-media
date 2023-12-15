@@ -1,5 +1,7 @@
 To Run:
 
+GRADERS - DATABASE INFORMATION CAN BE FOUND IN THE databaseinfo.md FILE
+
 $ node tunnel.js
   - Create a tunnel using a UMN account
 
